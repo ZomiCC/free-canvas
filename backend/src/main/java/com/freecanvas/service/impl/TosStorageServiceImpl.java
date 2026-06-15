@@ -6,6 +6,7 @@ import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -27,6 +28,7 @@ import java.util.Base64;
  * 基于 AWS S3 SDK v2，TOS 完全兼容 S3 协议
  */
 @Service
+@ConditionalOnExpression("!'${tos.access-key-id:}'.isEmpty()")
 public class TosStorageServiceImpl implements CloudStorageService {
 
     private static final Logger log = LoggerFactory.getLogger(TosStorageServiceImpl.class);
